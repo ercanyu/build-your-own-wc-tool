@@ -12,7 +12,7 @@
 
 !*.go
 !go.sum
-!go.mod
+!wc-tool/go.mod
 
 !README.md
 !LICENSE
