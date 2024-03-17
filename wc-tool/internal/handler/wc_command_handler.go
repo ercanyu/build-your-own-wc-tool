@@ -1,32 +1,21 @@
-package command
+package handler
 
 import (
 	"bufio"
 	"fmt"
-	ufcli "github.com/urfave/cli/v2"
 	"os"
 	"path/filepath"
 )
 
 const DataDirectory = "/data/"
 
-func WcCommand() *ufcli.Command {
-	return &ufcli.Command{
-		Name:  "wc",
-		Usage: "wc tool",
-		Action: func(ctx *ufcli.Context) error {
-			filename := ctx.Args().Get(0)
-			if ctx.Bool("c") {
-				numberOfBytes := findNumberOfBytesInFile(filename)
-				fmt.Printf("%d %s\n", numberOfBytes, filename)
-			} else if ctx.Bool("l") {
-				numberOfLines := findNumberOfLinesInFile(filename)
-				fmt.Printf("%d %s\n", numberOfLines, filename)
-			}
-
-			return nil
-		},
+func HandleWcCommand(filename string, option string) int {
+	if option == "l" {
+		return findNumberOfLinesInFile(filename)
+	} else if option == "c" {
+		return int(findNumberOfBytesInFile(filename))
 	}
+	return 0
 }
 
 func findNumberOfLinesInFile(fileName string) int {
