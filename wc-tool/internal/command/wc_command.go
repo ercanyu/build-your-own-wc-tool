@@ -9,7 +9,7 @@ import (
 func WcCommand() *ufcli.Command {
 	return &ufcli.Command{
 		Name:  "wc",
-		Usage: "wc tool ",
+		Usage: "wc tool command",
 		Action: func(ctx *ufcli.Context) error {
 			wcAction := handler.WcAction{
 				Option:   getOptionFromContext(ctx),
