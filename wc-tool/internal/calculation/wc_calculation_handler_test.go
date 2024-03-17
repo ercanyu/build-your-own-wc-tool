@@ -1,4 +1,4 @@
-package handler
+package calculation
 
 import (
 	"testing"

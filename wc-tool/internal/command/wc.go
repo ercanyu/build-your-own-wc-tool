@@ -2,7 +2,7 @@ package command
 
 import (
 	"fmt"
-	"github.com/ercanyu/wc-tool/internal/handler"
+	"github.com/ercanyu/wc-tool/internal/calculation"
 	ufcli "github.com/urfave/cli/v2"
 )
 
@@ -19,21 +19,21 @@ func WcCommand() *ufcli.Command {
 func handleWcAction(ctx *ufcli.Context) error {
 	filename := ctx.Args().Get(0)
 	if ctx.Bool("c") {
-		numberOfBytes := handler.HandleWcCalculation(filename, handler.NumberOfBytes)
+		numberOfBytes := calculation.HandleWcCalculation(filename, calculation.NumberOfBytes)
 		fmt.Printf("%d %s\n", numberOfBytes, filename)
 	} else if ctx.Bool("l") {
-		numberOfLines := handler.HandleWcCalculation(filename, handler.NumberOfLines)
+		numberOfLines := calculation.HandleWcCalculation(filename, calculation.NumberOfLines)
 		fmt.Printf("%d %s\n", numberOfLines, filename)
 	} else if ctx.Bool("w") {
-		numberOfWords := handler.HandleWcCalculation(filename, handler.NumberOfWords)
+		numberOfWords := calculation.HandleWcCalculation(filename, calculation.NumberOfWords)
 		fmt.Printf("%d %s\n", numberOfWords, filename)
 	} else if ctx.Bool("m") {
-		numberOfCharacters := handler.HandleWcCalculation(filename, handler.NumberOfCharacters)
+		numberOfCharacters := calculation.HandleWcCalculation(filename, calculation.NumberOfCharacters)
 		fmt.Printf("%d %s\n", numberOfCharacters, filename)
 	} else {
-		numberOfBytes := handler.HandleWcCalculation(filename, handler.NumberOfBytes)
-		numberOfLines := handler.HandleWcCalculation(filename, handler.NumberOfLines)
-		numberOfWords := handler.HandleWcCalculation(filename, handler.NumberOfWords)
+		numberOfBytes := calculation.HandleWcCalculation(filename, calculation.NumberOfBytes)
+		numberOfLines := calculation.HandleWcCalculation(filename, calculation.NumberOfLines)
+		numberOfWords := calculation.HandleWcCalculation(filename, calculation.NumberOfWords)
 		fmt.Printf("%d %d %d %s\n", numberOfLines, numberOfWords, numberOfBytes, filename)
 	}
 	return nil
