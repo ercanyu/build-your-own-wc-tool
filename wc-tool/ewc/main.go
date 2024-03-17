@@ -26,7 +26,7 @@ func main() {
 			&ufcli.BoolFlag{
 				Name:    "words",
 				Aliases: []string{"w"},
-				Usage:   "count lines",
+				Usage:   "count words",
 			},
 			&ufcli.BoolFlag{
 				Name:    "characters",
