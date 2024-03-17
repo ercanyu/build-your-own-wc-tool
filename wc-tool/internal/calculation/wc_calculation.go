@@ -19,16 +19,18 @@ const (
 )
 
 func WcCalculation(filename string, option WcCalculationType) int {
-	if option == NumberOfLines {
+	switch option {
+	case NumberOfLines:
 		return findNumberOfLinesInFile(filename)
-	} else if option == NumberOfBytes {
+	case NumberOfBytes:
 		return findNumberOfBytesInFile(filename)
-	} else if option == NumberOfWords {
+	case NumberOfWords:
 		return findNumberOfWordsInFile(filename)
-	} else if option == NumberOfCharacters {
+	case NumberOfCharacters:
 		return findNumberOfCharactersInFile(filename)
+	default:
+		panic(fmt.Sprintf("Invalid option: %d", option))
 	}
-	panic(fmt.Sprintf("Invalid option: %d", option))
 }
 
 func findNumberOfCharactersInFile(filename string) int {
