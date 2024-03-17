@@ -10,7 +10,7 @@ import (
 
 const DataDirectory = "/data/"
 
-func WordCountCommand() *ufcli.Command {
+func WcCommand() *ufcli.Command {
 	return &ufcli.Command{
 		Name:  "wc",
 		Usage: "wc tool",

@@ -25,7 +25,7 @@ func main() {
 			},
 		},
 		Commands: []*ufcli.Command{
-			command.WordCountCommand(),
+			command.WcCommand(),
 		},
 	}
 
