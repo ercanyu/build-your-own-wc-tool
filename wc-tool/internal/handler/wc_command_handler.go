@@ -16,8 +16,31 @@ func HandleWcCommand(filename string, option string) int {
 		return findNumberOfBytesInFile(filename)
 	} else if option == "w" {
 		return findNumberOfWordsInFile(filename)
+	} else if option == "m" {
+		return findNumberOfCharactersInFile(filename)
 	}
 	return 0
+}
+
+func findNumberOfCharactersInFile(filename string) int {
+	file, err := openFile(filename)
+	if err != nil {
+		fmt.Println("Error opening file: ", err)
+		return 0
+	}
+	numberOfCharacters := countNumberOfCharacters(file)
+	closeFile(file)
+	return numberOfCharacters
+}
+
+func countNumberOfCharacters(file *os.File) int {
+	numberOfCharacters := 0
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanRunes)
+	for scanner.Scan() {
+		numberOfCharacters++
+	}
+	return numberOfCharacters
 }
 
 func findNumberOfWordsInFile(filename string) int {
