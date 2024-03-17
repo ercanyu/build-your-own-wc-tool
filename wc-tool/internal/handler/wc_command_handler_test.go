@@ -42,3 +42,16 @@ func TestHandleWcCommandWithOptionW(t *testing.T) {
 		t.Errorf("Expected 58164, got %d", numberOfLines)
 	}
 }
+
+func TestHandleWcCommandWithOptionM(t *testing.T) {
+	// given
+	filename := "test.txt"
+
+	// when
+	numberOfLines := HandleWcCommand(filename, "m")
+
+	// then
+	if numberOfLines != 339292 {
+		t.Errorf("Expected 339292, got %d", numberOfLines)
+	}
+}

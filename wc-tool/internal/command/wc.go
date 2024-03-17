@@ -24,6 +24,12 @@ func handleWcAction(ctx *ufcli.Context) error {
 	} else if ctx.Bool("l") {
 		numberOfLines := handler.HandleWcCommand(filename, "l")
 		fmt.Printf("%d %s\n", numberOfLines, filename)
+	} else if ctx.Bool("w") {
+		numberOfWords := handler.HandleWcCommand(filename, "w")
+		fmt.Printf("%d %s\n", numberOfWords, filename)
+	} else if ctx.Bool("m") {
+		numberOfCharacters := handler.HandleWcCommand(filename, "m")
+		fmt.Printf("%d %s\n", numberOfCharacters, filename)
 	}
 	return nil
 }

@@ -13,9 +13,32 @@ func HandleWcCommand(filename string, option string) int {
 	if option == "l" {
 		return findNumberOfLinesInFile(filename)
 	} else if option == "c" {
-		return int(findNumberOfBytesInFile(filename))
+		return findNumberOfBytesInFile(filename)
+	} else if option == "w" {
+		return findNumberOfWordsInFile(filename)
 	}
 	return 0
+}
+
+func findNumberOfWordsInFile(filename string) int {
+	file, err := openFile(filename)
+	if err != nil {
+		fmt.Println("Error opening file: ", err)
+		return 0
+	}
+	numberOfWords := countNumberOfWords(file)
+	closeFile(file)
+	return numberOfWords
+}
+
+func countNumberOfWords(file *os.File) int {
+	numberOfWords := 0
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanWords)
+	for scanner.Scan() {
+		numberOfWords++
+	}
+	return numberOfWords
 }
 
 func findNumberOfLinesInFile(fileName string) int {
@@ -25,7 +48,7 @@ func findNumberOfLinesInFile(fileName string) int {
 		return 0
 	}
 	numberOfLines := countNumberOfLines(file)
-	defer closeFile(file)
+	closeFile(file)
 	return numberOfLines
 }
 
@@ -38,19 +61,19 @@ func countNumberOfLines(file *os.File) int {
 	return numberOfLines
 }
 
-func findNumberOfBytesInFile(fileName string) int64 {
+func findNumberOfBytesInFile(fileName string) int {
 	file, err := openFile(fileName)
 	if err != nil {
 		fmt.Println("Error opening file: ", err)
 		return 0
 	}
 	numberOfBytes := countNumberOfBytes(file)
-	defer closeFile(file)
+	closeFile(file)
 	return numberOfBytes
 }
 
-func countNumberOfBytes(file *os.File) int64 {
-	var sizeInBytes int64
+func countNumberOfBytes(file *os.File) int {
+	var sizeInBytes int
 	buffer := make([]byte, 1024)
 	for {
 		n, err := file.Read(buffer)
@@ -60,7 +83,7 @@ func countNumberOfBytes(file *os.File) int64 {
 			}
 			break
 		}
-		sizeInBytes += int64(n)
+		sizeInBytes += n
 	}
 	return sizeInBytes
 }

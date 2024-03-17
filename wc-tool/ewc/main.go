@@ -23,6 +23,16 @@ func main() {
 				Aliases: []string{"l"},
 				Usage:   "count lines",
 			},
+			&ufcli.BoolFlag{
+				Name:    "words",
+				Aliases: []string{"w"},
+				Usage:   "count lines",
+			},
+			&ufcli.BoolFlag{
+				Name:    "characters",
+				Aliases: []string{"m"},
+				Usage:   "count characters",
+			},
 		},
 		Commands: []*ufcli.Command{
 			command.WcCommand(),
