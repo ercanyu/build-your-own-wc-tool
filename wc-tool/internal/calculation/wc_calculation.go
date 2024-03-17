@@ -18,7 +18,7 @@ const (
 	NumberOfCharacters
 )
 
-func HandleWcCalculation(filename string, option WcCalculationType) int {
+func WcCalculation(filename string, option WcCalculationType) int {
 	if option == NumberOfLines {
 		return findNumberOfLinesInFile(filename)
 	} else if option == NumberOfBytes {
