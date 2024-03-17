@@ -4,12 +4,12 @@ import (
 	"testing"
 )
 
-func TestHandleWcCommandWithOptionC(t *testing.T) {
+func TestHandleWcCalculationForNumberOfBytes(t *testing.T) {
 	// given
 	filename := "test.txt"
 
 	// when
-	numberOfBytes := HandleWcCommand(filename, "c")
+	numberOfBytes := HandleWcCalculation(filename, NumberOfBytes)
 
 	// then
 	if numberOfBytes != 342190 {
@@ -17,12 +17,12 @@ func TestHandleWcCommandWithOptionC(t *testing.T) {
 	}
 }
 
-func TestHandleWcCommandWithOptionL(t *testing.T) {
+func TestHandleWcCalculationForNumberOfLines(t *testing.T) {
 	// given
 	filename := "test.txt"
 
 	// when
-	numberOfLines := HandleWcCommand(filename, "l")
+	numberOfLines := HandleWcCalculation(filename, NumberOfLines)
 
 	// then
 	if numberOfLines != 7145 {
@@ -30,12 +30,12 @@ func TestHandleWcCommandWithOptionL(t *testing.T) {
 	}
 }
 
-func TestHandleWcCommandWithOptionW(t *testing.T) {
+func TestHandleWcCalculationForNumberOfWords(t *testing.T) {
 	// given
 	filename := "test.txt"
 
 	// when
-	numberOfLines := HandleWcCommand(filename, "w")
+	numberOfLines := HandleWcCalculation(filename, NumberOfWords)
 
 	// then
 	if numberOfLines != 58164 {
@@ -43,12 +43,12 @@ func TestHandleWcCommandWithOptionW(t *testing.T) {
 	}
 }
 
-func TestHandleWcCommandWithOptionM(t *testing.T) {
+func TestHandleWcCalculationForNumberOfCharacters(t *testing.T) {
 	// given
 	filename := "test.txt"
 
 	// when
-	numberOfLines := HandleWcCommand(filename, "m")
+	numberOfLines := HandleWcCalculation(filename, NumberOfCharacters)
 
 	// then
 	if numberOfLines != 339292 {

@@ -9,17 +9,26 @@ import (
 
 const DataDirectory = "/data/"
 
-func HandleWcCommand(filename string, option string) int {
-	if option == "l" {
+type WcCalculationType int
+
+const (
+	NumberOfLines WcCalculationType = iota
+	NumberOfBytes
+	NumberOfWords
+	NumberOfCharacters
+)
+
+func HandleWcCalculation(filename string, option WcCalculationType) int {
+	if option == NumberOfLines {
 		return findNumberOfLinesInFile(filename)
-	} else if option == "c" {
+	} else if option == NumberOfBytes {
 		return findNumberOfBytesInFile(filename)
-	} else if option == "w" {
+	} else if option == NumberOfWords {
 		return findNumberOfWordsInFile(filename)
-	} else if option == "m" {
+	} else if option == NumberOfCharacters {
 		return findNumberOfCharactersInFile(filename)
 	}
-	return 0
+	panic(fmt.Sprintf("Invalid option: %d", option))
 }
 
 func findNumberOfCharactersInFile(filename string) int {
