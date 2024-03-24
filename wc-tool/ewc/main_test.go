@@ -14,7 +14,7 @@ const wordCountInTestFile = 58164
 const lineCountInTestFile = 7145
 const characterCountInTestFile = 339292
 
-func TestWcWithOptionCWithFile(t *testing.T) {
+func TestWcWithOptionCFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "-c", "wc", testFilename}
@@ -29,7 +29,7 @@ func TestWcWithOptionCWithFile(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionLWithFile(t *testing.T) {
+func TestWcWithOptionLFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "-l", "wc", testFilename}
@@ -44,7 +44,7 @@ func TestWcWithOptionLWithFile(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionWWithFile(t *testing.T) {
+func TestWcWithOptionWFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "-w", "wc", testFilename}
@@ -59,7 +59,7 @@ func TestWcWithOptionWWithFile(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionMWithFile(t *testing.T) {
+func TestWcWithOptionMFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "-m", "wc", testFilename}
@@ -74,7 +74,7 @@ func TestWcWithOptionMWithFile(t *testing.T) {
 	}
 }
 
-func TestWcWithNoOptionWithFile(t *testing.T) {
+func TestWcWithNoOptionFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "wc", testFilename}
@@ -89,7 +89,7 @@ func TestWcWithNoOptionWithFile(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionCWithStdin(t *testing.T) {
+func TestWcWithOptionCFromStdin(t *testing.T) {
 	// given
 	testInput := readTestDataFromWcToolTestFile()
 	oldStdin := os.Stdin
@@ -107,7 +107,61 @@ func TestWcWithOptionCWithStdin(t *testing.T) {
 	}
 }
 
-func TestWcWithNoOptionWithStdin(t *testing.T) {
+func TestWcWithOptionLFromStdin(t *testing.T) {
+	// given
+	testInput := readTestDataFromWcToolTestFile()
+	oldStdin := os.Stdin
+	writeTestInputToStdin(testInput)
+	defer func() { os.Stdin = oldStdin }()
+	os.Args = []string{"ewc", "-l", "wc"}
+
+	// when
+	actualOutput := runMainAndCaptureOutput()
+
+	// then
+	expectedOutput := fmt.Sprintf("%d", 7145)
+	if !strings.Contains(actualOutput, expectedOutput) {
+		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
+	}
+}
+
+func TestWcWithOptionWFromStdin(t *testing.T) {
+	// given
+	testInput := readTestDataFromWcToolTestFile()
+	oldStdin := os.Stdin
+	writeTestInputToStdin(testInput)
+	defer func() { os.Stdin = oldStdin }()
+	os.Args = []string{"ewc", "-w", "wc"}
+
+	// when
+	actualOutput := runMainAndCaptureOutput()
+
+	// then
+	expectedOutput := fmt.Sprintf("%d", 58164)
+	if !strings.Contains(actualOutput, expectedOutput) {
+		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
+	}
+}
+
+func TestWcWithOptionMFromStdin(t *testing.T) {
+	// given
+	testInput := readTestDataFromWcToolTestFile()
+	oldStdin := os.Stdin
+	writeTestInputToStdin(testInput)
+	defer func() { os.Stdin = oldStdin }()
+	os.Args = []string{"ewc", "-m", "wc"}
+
+	// when
+	actualOutput := runMainAndCaptureOutput()
+
+	// then
+	expectedOutput := fmt.Sprintf("%d", 339292)
+	if !strings.Contains(actualOutput, expectedOutput) {
+		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
+	}
+}
+
+func TestWcWithNoOptionFromStdin(t *testing.T) {
 	// given
 	testInput := readTestDataFromWcToolTestFile()
 	oldStdin := os.Stdin
