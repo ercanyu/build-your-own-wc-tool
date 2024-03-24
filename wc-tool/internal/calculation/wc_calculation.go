@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const DataDirectory = "/data/"
@@ -46,6 +47,37 @@ func WcCalculationFromStdin(option WcCalculationType) int {
 	default:
 		panic(fmt.Sprintf("Invalid option: %d", option))
 	}
+}
+
+func WcCalculationFromString(input string, option WcCalculationType) int {
+	switch option {
+	case NumberOfBytes:
+		return findNumberOfBytesFromString(input)
+	case NumberOfLines:
+		return findNumberOfLinesFromString(input)
+	case NumberOfWords:
+		return findNumberOfWordsFromString(input)
+	case NumberOfCharacters:
+		return findNumberOfCharactersFromString(input)
+	default:
+		panic(fmt.Sprintf("Invalid option: %d", option))
+	}
+}
+
+func findNumberOfBytesFromString(input string) int {
+	return len([]byte(input))
+}
+
+func findNumberOfLinesFromString(input string) int {
+	return strings.Count(input, "\n")
+}
+
+func findNumberOfWordsFromString(input string) int {
+	return len(strings.Fields(input))
+}
+
+func findNumberOfCharactersFromString(input string) int {
+	return len([]rune(input))
 }
 
 func findNumberOfBytesInFile(fileName string) int {

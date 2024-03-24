@@ -126,6 +126,41 @@ func TestWcWithNoOptionWithFile(t *testing.T) {
 //	}
 //}
 
+func TestWcWithNoOptionWithStdin(t *testing.T) {
+	// given
+	testInput := "this is a test\nthis is not a test though\n"
+	expectedLineCount := 2
+	expectedWordCount := 10
+	expectedByteCount := len(testInput)
+	os.Args = []string{"ewc", "wc"}
+
+	oldStdin := os.Stdin
+	r, w, err := os.Pipe()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	os.Stdin = r
+	defer func() { os.Stdin = oldStdin }()
+
+	go func() {
+		_, err := w.Write([]byte(testInput))
+		if err != nil {
+			t.Error(err)
+		}
+		w.Close()
+	}()
+
+	// when
+	actualOutput := runAndCaptureOutput(main)
+
+	// then
+	expectedOutput := fmt.Sprintf("%d %d %d", expectedLineCount, expectedWordCount, expectedByteCount)
+	if !strings.Contains(actualOutput, expectedOutput) {
+		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
+	}
+}
+
 func runAndCaptureOutput(f func()) string {
 	// Keep backup of the real stdout
 	old := os.Stdout

@@ -3,6 +3,8 @@ package handler
 import (
 	"fmt"
 	"github.com/ercanyu/coding-challenges/wc-tool/internal/calculation"
+	"io"
+	"os"
 )
 
 type WcAction struct {
@@ -47,9 +49,17 @@ func handleWcWithoutOption(filename string) string {
 		numberOfWords := calculation.WcCalculationFromFile(filename, calculation.NumberOfWords)
 		return fmt.Sprintf("%d %d %d %s\n", numberOfLines, numberOfWords, numberOfBytes, filename)
 	} else {
-		numberOfBytes := calculation.WcCalculationFromStdin(calculation.NumberOfBytes)
-		numberOfLines := calculation.WcCalculationFromStdin(calculation.NumberOfLines)
-		numberOfWords := calculation.WcCalculationFromStdin(calculation.NumberOfWords)
+		//numberOfBytes := calculation.WcCalculationFromStdin(calculation.NumberOfBytes)
+		//numberOfLines := calculation.WcCalculationFromStdin(calculation.NumberOfLines)
+		//numberOfWords := calculation.WcCalculationFromStdin(calculation.NumberOfWords)
+		inputBytes, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			panic(err)
+		}
+		input := string(inputBytes)
+		numberOfBytes := calculation.WcCalculationFromString(input, calculation.NumberOfBytes)
+		numberOfLines := calculation.WcCalculationFromString(input, calculation.NumberOfLines)
+		numberOfWords := calculation.WcCalculationFromString(input, calculation.NumberOfWords)
 		return fmt.Sprintf("%d %d %d\n", numberOfLines, numberOfWords, numberOfBytes)
 	}
 }
