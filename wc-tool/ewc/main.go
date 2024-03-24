@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ercanyu/wc-tool/internal/command"
+	"github.com/ercanyu/coding-challenges/wc-tool/internal/command"
 	ufcli "github.com/urfave/cli/v2"
 	"log"
 	"os"

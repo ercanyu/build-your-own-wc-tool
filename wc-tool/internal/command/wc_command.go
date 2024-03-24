@@ -2,7 +2,7 @@ package command
 
 import (
 	"fmt"
-	"github.com/ercanyu/wc-tool/internal/handler"
+	"github.com/ercanyu/coding-challenges/wc-tool/internal/handler"
 	ufcli "github.com/urfave/cli/v2"
 )
 
