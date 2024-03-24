@@ -20,20 +20,20 @@ const (
 
 func WcCalculation(filename string, option WcCalculationType) int {
 	switch option {
+	case NumberOfBytes:
+		return calculateNumberOfBytes(filename)
 	case NumberOfLines:
 		return calculateNumberOfLines(filename)
-	case NumberOfBytes:
-		return calculateNumberOfBytesIn(filename)
 	case NumberOfWords:
 		return calculateNumberOfWords(filename)
 	case NumberOfCharacters:
-		return calculateNumberOfCharactersInFile(filename)
+		return calculateNumberOfCharacters(filename)
 	default:
 		panic(fmt.Sprintf("Invalid option: %d", option))
 	}
 }
 
-func calculateNumberOfCharactersInFile(filename string) int {
+func calculateNumberOfCharacters(filename string) int {
 	file, err := openFile(filename)
 	if err != nil {
 		fmt.Println("Error opening file: ", err)
@@ -105,7 +105,7 @@ func countNumberOfLines(file *os.File) int {
 	return numberOfLines
 }
 
-func calculateNumberOfBytesIn(fileName string) int {
+func calculateNumberOfBytes(fileName string) int {
 	file, err := openFile(fileName)
 	if err != nil {
 		fmt.Println("Error opening file: ", err)
