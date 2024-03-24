@@ -58,7 +58,7 @@ func TestWcWithOptionWWithFile(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionMWithFileWithCapture(t *testing.T) {
+func TestWcWithOptionMWithFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "-m", "wc", testFilename}
@@ -68,7 +68,7 @@ func TestWcWithOptionMWithFileWithCapture(t *testing.T) {
 
 	// then
 	expectedOutput := fmt.Sprintf("%d %s", characterCountInTestFile, testFilename)
-	if !strings.Contains(string(actualOutput), expectedOutput) {
+	if !strings.Contains(actualOutput, expectedOutput) {
 		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
 	}
 }
@@ -88,77 +88,55 @@ func TestWcWithNoOptionWithFile(t *testing.T) {
 	}
 }
 
-//func TestWcWithOptionCWithoutFile(t *testing.T) {
-//	// given
-//	testFileLocation := "../../data/wc_tool_test.txt"
-//	commandString := fmt.Sprintf("cat %s | ewc -c wc", testFileLocation)
-//	cmd := exec.Command("sh", "-c", commandString)
-//
-//	// when
-//	output, err := cmd.CombinedOutput()
-//	if err != nil {
-//		t.Errorf("Command execution failed with error: %v", err)
-//	}
-//
-//	// then
-//	expectedOutput := fmt.Sprintf("%d", byteCountInTestFile)
-//	if !strings.Contains(actualOutput, expectedOutput) {
-//		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
-//	}
-//}
-
-//func TestWcWithOptionLWithoutFile(t *testing.T) {
-//	// given
-//	testFileLocation := "../../data/wc_tool_test.txt"
-//	commandString := fmt.Sprintf("cat %s | ewc -l wc", testFileLocation)
-//	cmd := exec.Command("sh", "-c", commandString)
-//
-//	// when
-//	output, err := cmd.CombinedOutput()
-//	if err != nil {
-//		t.Errorf("Command execution failed with error: %v", err)
-//	}
-//
-//	// then
-//	expectedOutput := fmt.Sprintf("%d", lineCountInTestFile)
-//	if !strings.Contains(actualOutput, expectedOutput) {
-//		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
-//	}
-//}
-
-func TestWcWithNoOptionWithStdin(t *testing.T) {
+func TestWcWithOptionCWithStdin(t *testing.T) {
 	// given
 	testInput := "this is a test\nthis is not a test though\n"
-	expectedLineCount := 2
-	expectedWordCount := 10
-	expectedByteCount := len(testInput)
-	os.Args = []string{"ewc", "wc"}
-
 	oldStdin := os.Stdin
-	r, w, err := os.Pipe()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	os.Stdin = r
+	writeTestInputToStdin(testInput)
 	defer func() { os.Stdin = oldStdin }()
-
-	go func() {
-		_, err := w.Write([]byte(testInput))
-		if err != nil {
-			t.Error(err)
-		}
-		w.Close()
-	}()
+	os.Args = []string{"ewc", "-c", "wc"}
 
 	// when
 	actualOutput := runAndCaptureOutput(main)
 
 	// then
-	expectedOutput := fmt.Sprintf("%d %d %d", expectedLineCount, expectedWordCount, expectedByteCount)
+	expectedOutput := fmt.Sprintf("%d", len([]byte(testInput)))
 	if !strings.Contains(actualOutput, expectedOutput) {
 		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
 	}
+}
+
+func TestWcWithNoOptionWithStdin(t *testing.T) {
+	// given
+	testInput := "this is a test\nthis is not a test though\n"
+	oldStdin := os.Stdin
+	writeTestInputToStdin(testInput)
+	defer func() { os.Stdin = oldStdin }()
+	os.Args = []string{"ewc", "wc"}
+
+	// when
+	actualOutput := runAndCaptureOutput(main)
+
+	// then
+	expectedOutput := fmt.Sprintf("%d %d %d", 2, 10, len([]byte(testInput)))
+	if !strings.Contains(actualOutput, expectedOutput) {
+		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
+	}
+}
+
+func writeTestInputToStdin(testInput string) {
+	r, w, err := os.Pipe()
+	if err != nil {
+		panic(err)
+	}
+	os.Stdin = r
+	go func() {
+		_, err := w.Write([]byte(testInput))
+		if err != nil {
+			panic(err)
+		}
+		_ = w.Close()
+	}()
 }
 
 func runAndCaptureOutput(f func()) string {
