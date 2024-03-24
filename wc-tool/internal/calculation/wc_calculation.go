@@ -34,21 +34,6 @@ func WcCalculationFromFile(filename string, option WcCalculationType) int {
 	}
 }
 
-func WcCalculationFromStdin(option WcCalculationType) int {
-	switch option {
-	case NumberOfBytes:
-		return findNumberOfBytesFromStdin()
-	case NumberOfLines:
-		return findNumberOfLinesFromStdin()
-	case NumberOfWords:
-		return findNumberOfWordsFromStdin()
-	case NumberOfCharacters:
-		return findNumberOfCharactersFromStdin()
-	default:
-		panic(fmt.Sprintf("Invalid option: %d", option))
-	}
-}
-
 func WcCalculationFromString(input string, option WcCalculationType) int {
 	switch option {
 	case NumberOfBytes:
@@ -127,26 +112,6 @@ func findNumberOfCharactersInFile(filename string) int {
 	numberOfCharacters := countNumberOfCharactersFromScanner(scanner)
 	closeFile(file)
 	return numberOfCharacters
-}
-
-func findNumberOfBytesFromStdin() int {
-	scanner := bufio.NewScanner(os.Stdin)
-	return countNumberOfBytesFromScanner(scanner)
-}
-
-func findNumberOfLinesFromStdin() int {
-	scanner := bufio.NewScanner(os.Stdin)
-	return countNumberOfLinesFromScanner(scanner)
-}
-
-func findNumberOfWordsFromStdin() int {
-	scanner := bufio.NewScanner(os.Stdin)
-	return countNumberOfWordsFromScanner(scanner)
-}
-
-func findNumberOfCharactersFromStdin() int {
-	scanner := bufio.NewScanner(os.Stdin)
-	return countNumberOfCharactersFromScanner(scanner)
 }
 
 func countNumberOfBytesFromScanner(scanner *bufio.Scanner) int {
