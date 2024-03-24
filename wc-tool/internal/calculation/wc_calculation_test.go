@@ -9,7 +9,7 @@ func TestWcCalculationForNumberOfBytes(t *testing.T) {
 	filename := "wc_tool_test.txt"
 
 	// when
-	numberOfBytes := WcCalculation(filename, NumberOfBytes)
+	numberOfBytes := WcCalculationFromFile(filename, NumberOfBytes)
 
 	// then
 	if numberOfBytes != 342190 {
@@ -22,7 +22,7 @@ func TestWcCalculationForNumberOfLines(t *testing.T) {
 	filename := "wc_tool_test.txt"
 
 	// when
-	numberOfLines := WcCalculation(filename, NumberOfLines)
+	numberOfLines := WcCalculationFromFile(filename, NumberOfLines)
 
 	// then
 	if numberOfLines != 7145 {
@@ -35,7 +35,7 @@ func TestWcCalculationForNumberOfWords(t *testing.T) {
 	filename := "wc_tool_test.txt"
 
 	// when
-	numberOfLines := WcCalculation(filename, NumberOfWords)
+	numberOfLines := WcCalculationFromFile(filename, NumberOfWords)
 
 	// then
 	if numberOfLines != 58164 {
@@ -48,7 +48,7 @@ func TestWcCalculationForNumberOfCharacters(t *testing.T) {
 	filename := "wc_tool_test.txt"
 
 	// when
-	numberOfLines := WcCalculation(filename, NumberOfCharacters)
+	numberOfLines := WcCalculationFromFile(filename, NumberOfCharacters)
 
 	// then
 	if numberOfLines != 339292 {
