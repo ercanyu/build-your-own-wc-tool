@@ -11,8 +11,8 @@
 !/.gitignore
 
 !*.go
-!go.sum
-!go.mod
+!wc-tool/go.sum
+!wc-tool/go.mod
 
 !README.md
 !LICENSE
