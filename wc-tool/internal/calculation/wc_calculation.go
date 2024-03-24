@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const DataDirectory = "/data/"
@@ -33,19 +34,35 @@ func WcCalculationFromFile(filename string, option WcCalculationType) int {
 	}
 }
 
-func WcCalculationFromStdin(option WcCalculationType) int {
+func WcCalculationFromString(input string, option WcCalculationType) int {
 	switch option {
 	case NumberOfBytes:
-		return findNumberOfBytesFromStdin()
+		return findNumberOfBytesFromString(input)
 	case NumberOfLines:
-		return findNumberOfLinesFromStdin()
+		return findNumberOfLinesFromString(input)
 	case NumberOfWords:
-		return findNumberOfWordsFromStdin()
+		return findNumberOfWordsFromString(input)
 	case NumberOfCharacters:
-		return findNumberOfCharactersFromStdin()
+		return findNumberOfCharactersFromString(input)
 	default:
 		panic(fmt.Sprintf("Invalid option: %d", option))
 	}
+}
+
+func findNumberOfBytesFromString(input string) int {
+	return len([]byte(input))
+}
+
+func findNumberOfLinesFromString(input string) int {
+	return strings.Count(input, "\n")
+}
+
+func findNumberOfWordsFromString(input string) int {
+	return len(strings.Fields(input))
+}
+
+func findNumberOfCharactersFromString(input string) int {
+	return len([]rune(input))
 }
 
 func findNumberOfBytesInFile(fileName string) int {
@@ -95,26 +112,6 @@ func findNumberOfCharactersInFile(filename string) int {
 	numberOfCharacters := countNumberOfCharactersFromScanner(scanner)
 	closeFile(file)
 	return numberOfCharacters
-}
-
-func findNumberOfBytesFromStdin() int {
-	scanner := bufio.NewScanner(os.Stdin)
-	return countNumberOfBytesFromScanner(scanner)
-}
-
-func findNumberOfLinesFromStdin() int {
-	scanner := bufio.NewScanner(os.Stdin)
-	return countNumberOfLinesFromScanner(scanner)
-}
-
-func findNumberOfWordsFromStdin() int {
-	scanner := bufio.NewScanner(os.Stdin)
-	return countNumberOfWordsFromScanner(scanner)
-}
-
-func findNumberOfCharactersFromStdin() int {
-	scanner := bufio.NewScanner(os.Stdin)
-	return countNumberOfCharactersFromScanner(scanner)
 }
 
 func countNumberOfBytesFromScanner(scanner *bufio.Scanner) int {
