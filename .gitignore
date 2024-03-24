@@ -12,7 +12,8 @@
 
 !*.go
 !go.sum
-!wc-tool/go.mod
+!go.mod
+!data/
 
 !README.md
 !LICENSE

@@ -2,7 +2,7 @@ package handler
 
 import (
 	"fmt"
-	"github.com/ercanyu/wc-tool/internal/calculation"
+	"github.com/ercanyu/coding-challenges/wc-tool/internal/calculation"
 )
 
 type WcAction struct {

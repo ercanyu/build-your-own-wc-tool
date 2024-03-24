@@ -6,7 +6,7 @@ import (
 
 func TestWcCalculationForNumberOfBytes(t *testing.T) {
 	// given
-	filename := "test.txt"
+	filename := "wc_tool_test.txt"
 
 	// when
 	numberOfBytes := WcCalculation(filename, NumberOfBytes)
@@ -19,7 +19,7 @@ func TestWcCalculationForNumberOfBytes(t *testing.T) {
 
 func TestWcCalculationForNumberOfLines(t *testing.T) {
 	// given
-	filename := "test.txt"
+	filename := "wc_tool_test.txt"
 
 	// when
 	numberOfLines := WcCalculation(filename, NumberOfLines)
@@ -32,7 +32,7 @@ func TestWcCalculationForNumberOfLines(t *testing.T) {
 
 func TestWcCalculationForNumberOfWords(t *testing.T) {
 	// given
-	filename := "test.txt"
+	filename := "wc_tool_test.txt"
 
 	// when
 	numberOfLines := WcCalculation(filename, NumberOfWords)
@@ -45,7 +45,7 @@ func TestWcCalculationForNumberOfWords(t *testing.T) {
 
 func TestWcCalculationForNumberOfCharacters(t *testing.T) {
 	// given
-	filename := "test.txt"
+	filename := "wc_tool_test.txt"
 
 	// when
 	numberOfLines := WcCalculation(filename, NumberOfCharacters)

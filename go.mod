@@ -1,4 +1,4 @@
-module github.com/ercanyu/wc-tool
+module github.com/ercanyu/coding-challenges
 
 go 1.22
 
