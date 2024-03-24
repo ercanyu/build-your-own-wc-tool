@@ -21,19 +21,19 @@ const (
 func WcCalculation(filename string, option WcCalculationType) int {
 	switch option {
 	case NumberOfLines:
-		return findNumberOfLinesInFile(filename)
+		return calculateNumberOfLines(filename)
 	case NumberOfBytes:
-		return findNumberOfBytesInFile(filename)
+		return calculateNumberOfBytesIn(filename)
 	case NumberOfWords:
-		return findNumberOfWordsInFile(filename)
+		return calculateNumberOfWords(filename)
 	case NumberOfCharacters:
-		return findNumberOfCharactersInFile(filename)
+		return calculateNumberOfCharactersInFile(filename)
 	default:
 		panic(fmt.Sprintf("Invalid option: %d", option))
 	}
 }
 
-func findNumberOfCharactersInFile(filename string) int {
+func calculateNumberOfCharactersInFile(filename string) int {
 	file, err := openFile(filename)
 	if err != nil {
 		fmt.Println("Error opening file: ", err)
@@ -54,7 +54,7 @@ func countNumberOfCharacters(file *os.File) int {
 	return numberOfCharacters
 }
 
-func findNumberOfWordsInFile(filename string) int {
+func calculateNumberOfWords(filename string) int {
 	file, err := openFile(filename)
 	if err != nil {
 		fmt.Println("Error opening file: ", err)
@@ -75,14 +75,24 @@ func countNumberOfWords(file *os.File) int {
 	return numberOfWords
 }
 
-func findNumberOfLinesInFile(fileName string) int {
-	file, err := openFile(fileName)
-	if err != nil {
-		fmt.Println("Error opening file: ", err)
-		return 0
+func calculateNumberOfLines(fileName string) int {
+	var numberOfLines int
+	if fileName == "" {
+		num := 0
+		scanner := bufio.NewScanner(os.Stdin)
+		for scanner.Scan() {
+			num++
+		}
+		return num
+	} else {
+		file, err := openFile(fileName)
+		if err != nil {
+			fmt.Println("Error opening file: ", err)
+			return 0
+		}
+		numberOfLines = countNumberOfLines(file)
+		closeFile(file)
 	}
-	numberOfLines := countNumberOfLines(file)
-	closeFile(file)
 	return numberOfLines
 }
 
@@ -95,7 +105,7 @@ func countNumberOfLines(file *os.File) int {
 	return numberOfLines
 }
 
-func findNumberOfBytesInFile(fileName string) int {
+func calculateNumberOfBytesIn(fileName string) int {
 	file, err := openFile(fileName)
 	if err != nil {
 		fmt.Println("Error opening file: ", err)
