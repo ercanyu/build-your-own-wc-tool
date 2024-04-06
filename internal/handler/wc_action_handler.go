@@ -2,7 +2,7 @@ package handler
 
 import (
 	"fmt"
-	"github.com/ercanyu/coding-challenges/wc-tool/internal/calculation"
+	"github.com/ercanyu/build-your-own-wc-tool/internal/calculation"
 	"io"
 	"os"
 )

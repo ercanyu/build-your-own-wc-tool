@@ -180,7 +180,7 @@ func TestWcWithNoOptionFromStdin(t *testing.T) {
 }
 
 func readTestDataFromWcToolTestFile() string {
-	testFile, _ := os.Open("../../data/wc_tool_test.txt")
+	testFile, _ := os.Open("../data/wc_tool_test.txt")
 	testDataBytes, _ := io.ReadAll(testFile)
 	testData := string(testDataBytes)
 	return testData
