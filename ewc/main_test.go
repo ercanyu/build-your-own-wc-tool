@@ -14,7 +14,7 @@ const wordCountInTestFile = 58164
 const lineCountInTestFile = 7145
 const characterCountInTestFile = 339292
 
-func TestWcWithOptionCFromFile(t *testing.T) {
+func TestEwcWithOptionCFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "-c", testFilename}
@@ -29,7 +29,7 @@ func TestWcWithOptionCFromFile(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionLFromFile(t *testing.T) {
+func TestEwcWithOptionLFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "-l", testFilename}
@@ -44,7 +44,7 @@ func TestWcWithOptionLFromFile(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionWFromFile(t *testing.T) {
+func TestEwcWithOptionWFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "-w", testFilename}
@@ -59,7 +59,7 @@ func TestWcWithOptionWFromFile(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionMFromFile(t *testing.T) {
+func TestEwcWithOptionMFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", "-m", testFilename}
@@ -74,7 +74,7 @@ func TestWcWithOptionMFromFile(t *testing.T) {
 	}
 }
 
-func TestWcWithNoOptionFromFile(t *testing.T) {
+func TestEwcWithNoOptionFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
 	os.Args = []string{"ewc", testFilename}
@@ -89,7 +89,7 @@ func TestWcWithNoOptionFromFile(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionCFromStdin(t *testing.T) {
+func TestEwcWithOptionCFromStdin(t *testing.T) {
 	// given
 	testInput := readTestDataFromWcToolTestFile()
 	oldStdin := os.Stdin
@@ -107,7 +107,7 @@ func TestWcWithOptionCFromStdin(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionLFromStdin(t *testing.T) {
+func TestEwcWithOptionLFromStdin(t *testing.T) {
 	// given
 	testInput := readTestDataFromWcToolTestFile()
 	oldStdin := os.Stdin
@@ -125,7 +125,7 @@ func TestWcWithOptionLFromStdin(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionWFromStdin(t *testing.T) {
+func TestEwcWithOptionWFromStdin(t *testing.T) {
 	// given
 	testInput := readTestDataFromWcToolTestFile()
 	oldStdin := os.Stdin
@@ -143,7 +143,7 @@ func TestWcWithOptionWFromStdin(t *testing.T) {
 	}
 }
 
-func TestWcWithOptionMFromStdin(t *testing.T) {
+func TestEwcWithOptionMFromStdin(t *testing.T) {
 	// given
 	testInput := readTestDataFromWcToolTestFile()
 	oldStdin := os.Stdin
@@ -161,7 +161,7 @@ func TestWcWithOptionMFromStdin(t *testing.T) {
 	}
 }
 
-func TestWcWithNoOptionFromStdin(t *testing.T) {
+func TestEwcWithNoOptionFromStdin(t *testing.T) {
 	// given
 	testInput := readTestDataFromWcToolTestFile()
 	oldStdin := os.Stdin

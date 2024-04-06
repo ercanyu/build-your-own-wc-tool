@@ -15,26 +15,26 @@ func main() {
 	cliApp := ufcli.App{
 		Name:    "ewc",
 		Version: "1.0.0",
-		Usage:   "A simple word count tool",
+		Usage:   "ewc -c|l|w|m [filename]",
 		Flags: []ufcli.Flag{
 			&ufcli.BoolFlag{
 				Name:    "bytes",
-				Aliases: []string{"c"},
+				Aliases: []string{command.OptionFlagForBytes},
 				Usage:   "size in bytes",
 			},
 			&ufcli.BoolFlag{
 				Name:    "lines",
-				Aliases: []string{"l"},
+				Aliases: []string{command.OptionFlagForLines},
 				Usage:   "count lines",
 			},
 			&ufcli.BoolFlag{
 				Name:    "words",
-				Aliases: []string{"w"},
+				Aliases: []string{command.OptionFlagForWords},
 				Usage:   "count words",
 			},
 			&ufcli.BoolFlag{
 				Name:    "characters",
-				Aliases: []string{"m"},
+				Aliases: []string{command.OptionFlagForCharacters},
 				Usage:   "count characters",
 			},
 		},
