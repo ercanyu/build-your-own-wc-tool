@@ -9,6 +9,10 @@ import (
 
 type WcCalculationType int
 
+type wcCalculation func(reader io.Reader) []int
+
+const NewLineLength = 2 //len([]byte("\r\n"))
+
 const (
 	NumberOfLines WcCalculationType = iota
 	NumberOfBytes
@@ -17,26 +21,24 @@ const (
 	NumberOfLinesWordsBytes
 )
 
-const NewLineLength = 2 //len([]byte("\r\n"))
-
-func WcCalculation(reader io.Reader, option WcCalculationType) []int {
-	switch option {
-	case NumberOfBytes:
-		return []int{findNumberOfBytes(reader)}
-	case NumberOfLines:
-		return []int{findNumberOfLines(reader)}
-	case NumberOfWords:
-		return []int{findNumberOfWords(reader)}
-	case NumberOfCharacters:
-		return []int{findNumberOfCharacters(reader)}
-	case NumberOfLinesWordsBytes:
-		return findNumberOfLinesWordsBytes(reader)
-	default:
-		panic(fmt.Sprintf("Invalid option: %d", option))
-	}
+var wcCalculators = map[WcCalculationType]wcCalculation{
+	NumberOfLines:           findNumberOfLines,
+	NumberOfBytes:           findNumberOfBytes,
+	NumberOfWords:           findNumberOfWords,
+	NumberOfCharacters:      findNumberOfCharacters,
+	NumberOfLinesWordsBytes: findNumberOfLinesWordsBytes,
 }
 
-func findNumberOfBytes(reader io.Reader) int {
+func WcCalculation(reader io.Reader, wcCalculationType WcCalculationType) []int {
+	wcCalculator, ok := wcCalculators[wcCalculationType]
+	if !ok {
+		panic(fmt.Sprintf("Invalid wcCalculationType: %d", wcCalculationType))
+	}
+
+	return wcCalculator(reader)
+}
+
+func findNumberOfBytes(reader io.Reader) []int {
 	numberOfBytes := 0
 	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
@@ -44,36 +46,36 @@ func findNumberOfBytes(reader io.Reader) int {
 		numberOfBytes += len(bytes) + NewLineLength
 	}
 
-	return numberOfBytes
+	return []int{numberOfBytes}
 }
 
-func findNumberOfLines(reader io.Reader) int {
+func findNumberOfLines(reader io.Reader) []int {
 	numberOfLines := 0
 	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		numberOfLines++
 	}
-	return numberOfLines
+	return []int{numberOfLines}
 }
 
-func findNumberOfWords(reader io.Reader) int {
+func findNumberOfWords(reader io.Reader) []int {
 	numberOfWords := 0
 	scanner := bufio.NewScanner(reader)
 	scanner.Split(bufio.ScanWords)
 	for scanner.Scan() {
 		numberOfWords++
 	}
-	return numberOfWords
+	return []int{numberOfWords}
 }
 
-func findNumberOfCharacters(reader io.Reader) int {
+func findNumberOfCharacters(reader io.Reader) []int {
 	numberOfCharacters := 0
 	scanner := bufio.NewScanner(reader)
 	scanner.Split(bufio.ScanRunes)
 	for scanner.Scan() {
 		numberOfCharacters++
 	}
-	return numberOfCharacters
+	return []int{numberOfCharacters}
 }
 
 func findNumberOfLinesWordsBytes(reader io.Reader) []int {
