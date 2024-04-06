@@ -17,7 +17,7 @@ const characterCountInTestFile = 339292
 func TestWcWithOptionCFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", "-c", "wc", testFilename}
+	os.Args = []string{"ewc", "-c", testFilename}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
@@ -32,7 +32,7 @@ func TestWcWithOptionCFromFile(t *testing.T) {
 func TestWcWithOptionLFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", "-l", "wc", testFilename}
+	os.Args = []string{"ewc", "-l", testFilename}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
@@ -47,7 +47,7 @@ func TestWcWithOptionLFromFile(t *testing.T) {
 func TestWcWithOptionWFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", "-w", "wc", testFilename}
+	os.Args = []string{"ewc", "-w", testFilename}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
@@ -62,7 +62,7 @@ func TestWcWithOptionWFromFile(t *testing.T) {
 func TestWcWithOptionMFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", "-m", "wc", testFilename}
+	os.Args = []string{"ewc", "-m", testFilename}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
@@ -77,7 +77,7 @@ func TestWcWithOptionMFromFile(t *testing.T) {
 func TestWcWithNoOptionFromFile(t *testing.T) {
 	// given
 	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", "wc", testFilename}
+	os.Args = []string{"ewc", testFilename}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
@@ -95,7 +95,7 @@ func TestWcWithOptionCFromStdin(t *testing.T) {
 	oldStdin := os.Stdin
 	writeTestInputToStdin(testInput)
 	defer func() { os.Stdin = oldStdin }()
-	os.Args = []string{"ewc", "-c", "wc"}
+	os.Args = []string{"ewc", "-c"}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
@@ -113,7 +113,7 @@ func TestWcWithOptionLFromStdin(t *testing.T) {
 	oldStdin := os.Stdin
 	writeTestInputToStdin(testInput)
 	defer func() { os.Stdin = oldStdin }()
-	os.Args = []string{"ewc", "-l", "wc"}
+	os.Args = []string{"ewc", "-l"}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
@@ -131,7 +131,7 @@ func TestWcWithOptionWFromStdin(t *testing.T) {
 	oldStdin := os.Stdin
 	writeTestInputToStdin(testInput)
 	defer func() { os.Stdin = oldStdin }()
-	os.Args = []string{"ewc", "-w", "wc"}
+	os.Args = []string{"ewc", "-w"}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
@@ -149,7 +149,7 @@ func TestWcWithOptionMFromStdin(t *testing.T) {
 	oldStdin := os.Stdin
 	writeTestInputToStdin(testInput)
 	defer func() { os.Stdin = oldStdin }()
-	os.Args = []string{"ewc", "-m", "wc"}
+	os.Args = []string{"ewc", "-m"}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
@@ -167,7 +167,7 @@ func TestWcWithNoOptionFromStdin(t *testing.T) {
 	oldStdin := os.Stdin
 	writeTestInputToStdin(testInput)
 	defer func() { os.Stdin = oldStdin }()
-	os.Args = []string{"ewc", "wc"}
+	os.Args = []string{"ewc"}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
