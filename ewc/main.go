@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/ercanyu/build-your-own-wc-tool/internal/command"
+	"github.com/ercanyu/build-your-own-wc-tool/pkg/command"
 	ufcli "github.com/urfave/cli/v2"
 	"log"
 	"os"

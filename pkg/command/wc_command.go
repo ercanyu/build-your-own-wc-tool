@@ -2,7 +2,7 @@ package command
 
 import (
 	"fmt"
-	"github.com/ercanyu/build-your-own-wc-tool/internal/calculation"
+	"github.com/ercanyu/build-your-own-wc-tool/pkg/calculation"
 	ufcli "github.com/urfave/cli/v2"
 	"io"
 	"os"
