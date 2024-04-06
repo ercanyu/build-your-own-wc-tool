@@ -6,14 +6,14 @@ func TestHandleWcActionWithOptionC(t *testing.T) {
 	// given
 	wcAction := WcAction{
 		OptionFlag: "c",
-		Filename:   "wc_tool_test.txt",
+		FileName:   "wc_tool_test.txt",
 	}
 
 	// when
 	actionResult, _ := HandleWcAction(wcAction)
 
 	// then
-	expectedResult := "342190 wc_tool_test.txt\n"
+	expectedResult := "342190"
 	if actionResult != expectedResult {
 		t.Errorf("Expected %s, got %s", expectedResult, actionResult)
 	}
@@ -23,14 +23,14 @@ func TestHandleWcActionWithOptionL(t *testing.T) {
 	// given
 	wcAction := WcAction{
 		OptionFlag: "l",
-		Filename:   "wc_tool_test.txt",
+		FileName:   "wc_tool_test.txt",
 	}
 
 	// when
 	actionResult, _ := HandleWcAction(wcAction)
 
 	// then
-	expectedResult := "7145 wc_tool_test.txt\n"
+	expectedResult := "7145"
 	if actionResult != expectedResult {
 		t.Errorf("Expected %s, got %s", expectedResult, actionResult)
 	}
@@ -40,14 +40,14 @@ func TestHandleWcActionWithOptionW(t *testing.T) {
 	// given
 	wcAction := WcAction{
 		OptionFlag: "w",
-		Filename:   "wc_tool_test.txt",
+		FileName:   "wc_tool_test.txt",
 	}
 
 	// when
 	actionResult, _ := HandleWcAction(wcAction)
 
 	// then
-	expectedResult := "58164 wc_tool_test.txt\n"
+	expectedResult := "58164"
 	if actionResult != expectedResult {
 		t.Errorf("Expected %s, got %s", expectedResult, actionResult)
 	}
@@ -57,14 +57,14 @@ func TestHandleWcActionWithOptionM(t *testing.T) {
 	// given
 	wcAction := WcAction{
 		OptionFlag: "m",
-		Filename:   "wc_tool_test.txt",
+		FileName:   "wc_tool_test.txt",
 	}
 
 	// when
 	actionResult, _ := HandleWcAction(wcAction)
 
 	// then
-	expectedResult := "339292 wc_tool_test.txt\n"
+	expectedResult := "339292"
 	if actionResult != expectedResult {
 		t.Errorf("Expected %s, got %s", expectedResult, actionResult)
 	}
@@ -73,14 +73,14 @@ func TestHandleWcActionWithOptionM(t *testing.T) {
 func TestHandleWcActionWithoutOption(t *testing.T) {
 	// given
 	wcAction := WcAction{
-		Filename: "wc_tool_test.txt",
+		FileName: "wc_tool_test.txt",
 	}
 
 	// when
 	actionResult, _ := HandleWcAction(wcAction)
 
 	// then
-	expectedResult := "7145 58164 342190 wc_tool_test.txt\n"
+	expectedResult := "7145 58164 342190"
 	if actionResult != expectedResult {
 		t.Errorf("Expected %s, got %s", expectedResult, actionResult)
 	}

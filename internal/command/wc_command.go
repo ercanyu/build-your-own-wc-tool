@@ -7,15 +7,21 @@ import (
 )
 
 func RunWcCommand(ctx *ufcli.Context) error {
+	fileName := ctx.Args().Get(0)
 	wcAction := handler.WcAction{
 		OptionFlag: getOptionFromContext(ctx),
-		Filename:   ctx.Args().Get(0),
+		FileName:   fileName,
 	}
 	actionResult, err := handler.HandleWcAction(wcAction)
-	fmt.Print(actionResult)
+
+	if fileName != "" {
+		fmt.Printf("%s %s\n", actionResult, fileName)
+	} else {
+		fmt.Printf("%s\n", actionResult)
+	}
+
 	return err
 }
-
 func getOptionFromContext(context *ufcli.Context) string {
 	if context.Bool("c") {
 		return "c"

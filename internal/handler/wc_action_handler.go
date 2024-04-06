@@ -9,7 +9,7 @@ import (
 
 type WcAction struct {
 	OptionFlag string
-	Filename   string
+	FileName   string
 }
 
 type WcActionType int
@@ -32,7 +32,7 @@ var wcActionHandlers = map[WcActionType]wcActionHandler{
 }
 
 func HandleWcAction(wcAction WcAction) (string, error) {
-	filename := wcAction.Filename
+	filename := wcAction.FileName
 	wcActionType := getWcActionType(wcAction.OptionFlag)
 	actionResult := ""
 
@@ -50,13 +50,13 @@ func handleWcWithoutOption(filename string) string {
 		numberOfBytes := calculation.WcCalculationFromFile(filename, calculation.NumberOfBytes)
 		numberOfLines := calculation.WcCalculationFromFile(filename, calculation.NumberOfLines)
 		numberOfWords := calculation.WcCalculationFromFile(filename, calculation.NumberOfWords)
-		return fmt.Sprintf("%d %d %d %s\n", numberOfLines, numberOfWords, numberOfBytes, filename)
+		return fmt.Sprintf("%d %d %d", numberOfLines, numberOfWords, numberOfBytes)
 	} else {
 		input := createStringFromStdin()
 		numberOfBytes := calculation.WcCalculationFromString(input, calculation.NumberOfBytes)
 		numberOfLines := calculation.WcCalculationFromString(input, calculation.NumberOfLines)
 		numberOfWords := calculation.WcCalculationFromString(input, calculation.NumberOfWords)
-		return fmt.Sprintf("%d %d %d\n", numberOfLines, numberOfWords, numberOfBytes)
+		return fmt.Sprintf("%d %d %d", numberOfLines, numberOfWords, numberOfBytes)
 	}
 }
 
@@ -64,11 +64,11 @@ func handleWcWithOptionM(filename string) string {
 	var numberOfCharacters int
 	if filename != "" {
 		numberOfCharacters = calculation.WcCalculationFromFile(filename, calculation.NumberOfCharacters)
-		return fmt.Sprintf("%d %s\n", numberOfCharacters, filename)
+		return fmt.Sprintf("%d", numberOfCharacters)
 	} else {
 		input := createStringFromStdin()
 		numberOfCharacters = calculation.WcCalculationFromString(input, calculation.NumberOfCharacters)
-		return fmt.Sprintf("%d\n", numberOfCharacters)
+		return fmt.Sprintf("%d", numberOfCharacters)
 	}
 }
 
@@ -76,11 +76,11 @@ func handleWcWithOptionW(filename string) string {
 	var numberOfWords int
 	if filename != "" {
 		numberOfWords = calculation.WcCalculationFromFile(filename, calculation.NumberOfWords)
-		return fmt.Sprintf("%d %s\n", numberOfWords, filename)
+		return fmt.Sprintf("%d", numberOfWords)
 	} else {
 		input := createStringFromStdin()
 		numberOfWords = calculation.WcCalculationFromString(input, calculation.NumberOfWords)
-		return fmt.Sprintf("%d\n", numberOfWords)
+		return fmt.Sprintf("%d", numberOfWords)
 	}
 }
 
@@ -88,11 +88,11 @@ func handleWcWithOptionL(filename string) string {
 	var numberOfLines int
 	if filename != "" {
 		numberOfLines = calculation.WcCalculationFromFile(filename, calculation.NumberOfLines)
-		return fmt.Sprintf("%d %s\n", numberOfLines, filename)
+		return fmt.Sprintf("%d", numberOfLines)
 	} else {
 		input := createStringFromStdin()
 		numberOfLines = calculation.WcCalculationFromString(input, calculation.NumberOfLines)
-		return fmt.Sprintf("%d\n", numberOfLines)
+		return fmt.Sprintf("%d", numberOfLines)
 	}
 }
 
@@ -100,11 +100,11 @@ func handleWcWithOptionC(filename string) string {
 	var numberOfBytes int
 	if filename != "" {
 		numberOfBytes = calculation.WcCalculationFromFile(filename, calculation.NumberOfBytes)
-		return fmt.Sprintf("%d %s\n", numberOfBytes, filename)
+		return fmt.Sprintf("%d", numberOfBytes)
 	} else {
 		input := createStringFromStdin()
 		numberOfBytes = calculation.WcCalculationFromString(input, calculation.NumberOfBytes)
-		return fmt.Sprintf("%d\n", numberOfBytes)
+		return fmt.Sprintf("%d", numberOfBytes)
 	}
 }
 
