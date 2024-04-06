@@ -5,8 +5,8 @@ import "testing"
 func TestHandleWcActionWithOptionC(t *testing.T) {
 	// given
 	wcAction := WcAction{
-		Option:   "c",
-		Filename: "wc_tool_test.txt",
+		OptionFlag: "c",
+		Filename:   "wc_tool_test.txt",
 	}
 
 	// when
@@ -22,8 +22,8 @@ func TestHandleWcActionWithOptionC(t *testing.T) {
 func TestHandleWcActionWithOptionL(t *testing.T) {
 	// given
 	wcAction := WcAction{
-		Option:   "l",
-		Filename: "wc_tool_test.txt",
+		OptionFlag: "l",
+		Filename:   "wc_tool_test.txt",
 	}
 
 	// when
@@ -39,8 +39,8 @@ func TestHandleWcActionWithOptionL(t *testing.T) {
 func TestHandleWcActionWithOptionW(t *testing.T) {
 	// given
 	wcAction := WcAction{
-		Option:   "w",
-		Filename: "wc_tool_test.txt",
+		OptionFlag: "w",
+		Filename:   "wc_tool_test.txt",
 	}
 
 	// when
@@ -56,8 +56,8 @@ func TestHandleWcActionWithOptionW(t *testing.T) {
 func TestHandleWcActionWithOptionM(t *testing.T) {
 	// given
 	wcAction := WcAction{
-		Option:   "m",
-		Filename: "wc_tool_test.txt",
+		OptionFlag: "m",
+		Filename:   "wc_tool_test.txt",
 	}
 
 	// when

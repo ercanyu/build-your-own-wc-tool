@@ -8,11 +8,12 @@ import (
 )
 
 type WcAction struct {
-	Option   string
-	Filename string
+	OptionFlag string
+	Filename   string
 }
 
 type WcActionType int
+type wcActionHandler func(s string) string
 
 const (
 	WcWithOptionC WcActionType = iota
@@ -22,23 +23,25 @@ const (
 	WcWithoutOption
 )
 
+var wcActionHandlers = map[WcActionType]wcActionHandler{
+	WcWithOptionC:   handleWcWithOptionC,
+	WcWithOptionL:   handleWcWithOptionL,
+	WcWithOptionW:   handleWcWithOptionW,
+	WcWithOptionM:   handleWcWithOptionM,
+	WcWithoutOption: handleWcWithoutOption,
+}
+
 func HandleWcAction(wcAction WcAction) (string, error) {
 	filename := wcAction.Filename
-	wcActionType := getWcActionType(wcAction)
+	wcActionType := getWcActionType(wcAction.OptionFlag)
 	actionResult := ""
 
-	switch wcActionType {
-	case WcWithOptionC:
-		actionResult = handleWcWithOptionC(filename)
-	case WcWithOptionL:
-		actionResult = handleWcWithOptionL(filename)
-	case WcWithOptionW:
-		actionResult = handleWcWithOptionW(filename)
-	case WcWithOptionM:
-		actionResult = handleWcWithOptionM(filename)
-	case WcWithoutOption:
-		actionResult = handleWcWithoutOption(filename)
+	wcHandler, ok := wcActionHandlers[wcActionType]
+	if !ok {
+		return "", fmt.Errorf("invalid wcAction Option: %s", wcAction.OptionFlag)
 	}
+	actionResult = wcHandler(filename)
+
 	return actionResult, nil
 }
 
@@ -114,8 +117,8 @@ func createStringFromStdin() string {
 	return input
 }
 
-func getWcActionType(wcAction WcAction) WcActionType {
-	switch wcAction.Option {
+func getWcActionType(optionFlag string) WcActionType {
+	switch optionFlag {
 	case "c":
 		return WcWithOptionC
 	case "l":

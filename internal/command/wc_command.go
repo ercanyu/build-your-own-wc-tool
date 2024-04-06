@@ -8,8 +8,8 @@ import (
 
 func RunWcCommand(ctx *ufcli.Context) error {
 	wcAction := handler.WcAction{
-		Option:   getOptionFromContext(ctx),
-		Filename: ctx.Args().Get(0),
+		OptionFlag: getOptionFromContext(ctx),
+		Filename:   ctx.Args().Get(0),
 	}
 	actionResult, err := handler.HandleWcAction(wcAction)
 	fmt.Print(actionResult)
