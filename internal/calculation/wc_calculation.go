@@ -3,12 +3,9 @@ package calculation
 import (
 	"bufio"
 	"fmt"
-	"os"
-	"path/filepath"
+	"io"
 	"strings"
 )
-
-const DataDirectory = "/data/"
 
 type WcCalculationType int
 
@@ -17,124 +14,51 @@ const (
 	NumberOfBytes
 	NumberOfWords
 	NumberOfCharacters
+	NumberOfLinesWordsBytes
 )
 
-func WcCalculationFromFile(filename string, option WcCalculationType) int {
+const NewLineLength = 2 //len([]byte("\r\n"))
+
+func WcCalculation(reader io.Reader, option WcCalculationType) []int {
 	switch option {
 	case NumberOfBytes:
-		return findNumberOfBytesInFile(filename)
+		return []int{findNumberOfBytes(reader)}
 	case NumberOfLines:
-		return findNumberOfLinesInFile(filename)
+		return []int{findNumberOfLines(reader)}
 	case NumberOfWords:
-		return findNumberOfWordsInFile(filename)
+		return []int{findNumberOfWords(reader)}
 	case NumberOfCharacters:
-		return findNumberOfCharactersInFile(filename)
+		return []int{findNumberOfCharacters(reader)}
+	case NumberOfLinesWordsBytes:
+		return findNumberOfLinesWordsBytes(reader)
 	default:
 		panic(fmt.Sprintf("Invalid option: %d", option))
 	}
 }
 
-func WcCalculationFromString(input string, option WcCalculationType) int {
-	switch option {
-	case NumberOfBytes:
-		return findNumberOfBytesFromString(input)
-	case NumberOfLines:
-		return findNumberOfLinesFromString(input)
-	case NumberOfWords:
-		return findNumberOfWordsFromString(input)
-	case NumberOfCharacters:
-		return findNumberOfCharactersFromString(input)
-	default:
-		panic(fmt.Sprintf("Invalid option: %d", option))
-	}
-}
-
-func findNumberOfBytesFromString(input string) int {
-	return len([]byte(input))
-}
-
-func findNumberOfLinesFromString(input string) int {
-	return strings.Count(input, "\n")
-}
-
-func findNumberOfWordsFromString(input string) int {
-	return len(strings.Fields(input))
-}
-
-func findNumberOfCharactersFromString(input string) int {
-	return len([]rune(input))
-}
-
-func findNumberOfBytesInFile(fileName string) int {
-	file, err := openFile(fileName)
-	if err != nil {
-		fmt.Println("Error opening file: ", err)
-		return 0
-	}
-	scanner := bufio.NewScanner(file)
-	numberOfBytes := countNumberOfBytesFromScanner(scanner)
-	closeFile(file)
-	return numberOfBytes
-}
-
-func findNumberOfLinesInFile(fileName string) int {
-	var numberOfLines int
-	file, err := openFile(fileName)
-	if err != nil {
-		fmt.Println("Error opening file: ", err)
-		return 0
-	}
-	scanner := bufio.NewScanner(file)
-	numberOfLines = countNumberOfLinesFromScanner(scanner)
-	closeFile(file)
-	return numberOfLines
-}
-
-func findNumberOfWordsInFile(filename string) int {
-	file, err := openFile(filename)
-	if err != nil {
-		fmt.Println("Error opening file: ", err)
-		return 0
-	}
-	scanner := bufio.NewScanner(file)
-	numberOfWords := countNumberOfWordsFromScanner(scanner)
-	closeFile(file)
-	return numberOfWords
-}
-
-func findNumberOfCharactersInFile(filename string) int {
-	file, err := openFile(filename)
-	if err != nil {
-		fmt.Println("Error opening file: ", err)
-		return 0
-	}
-	scanner := bufio.NewScanner(file)
-	numberOfCharacters := countNumberOfCharactersFromScanner(scanner)
-	closeFile(file)
-	return numberOfCharacters
-}
-
-func countNumberOfBytesFromScanner(scanner *bufio.Scanner) int {
+func findNumberOfBytes(reader io.Reader) int {
 	numberOfBytes := 0
-	newLineLength := len([]byte("\r\n"))
+	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		bytes := scanner.Bytes()
-		numberOfBytes += len(bytes) + newLineLength
+		numberOfBytes += len(bytes) + NewLineLength
 	}
 
 	return numberOfBytes
 }
 
-func countNumberOfLinesFromScanner(scanner *bufio.Scanner) int {
+func findNumberOfLines(reader io.Reader) int {
 	numberOfLines := 0
+	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		numberOfLines++
 	}
 	return numberOfLines
 }
 
-func countNumberOfWordsFromScanner(scanner *bufio.Scanner) int {
+func findNumberOfWords(reader io.Reader) int {
 	numberOfWords := 0
+	scanner := bufio.NewScanner(reader)
 	scanner.Split(bufio.ScanWords)
 	for scanner.Scan() {
 		numberOfWords++
@@ -142,8 +66,9 @@ func countNumberOfWordsFromScanner(scanner *bufio.Scanner) int {
 	return numberOfWords
 }
 
-func countNumberOfCharactersFromScanner(scanner *bufio.Scanner) int {
+func findNumberOfCharacters(reader io.Reader) int {
 	numberOfCharacters := 0
+	scanner := bufio.NewScanner(reader)
 	scanner.Split(bufio.ScanRunes)
 	for scanner.Scan() {
 		numberOfCharacters++
@@ -151,40 +76,15 @@ func countNumberOfCharactersFromScanner(scanner *bufio.Scanner) int {
 	return numberOfCharacters
 }
 
-func openFile(fileName string) (*os.File, error) {
-	projectRoot, err := findProjectRoot()
-	if err != nil {
-		return nil, err
-	}
-	fullFilePath := projectRoot + DataDirectory + fileName
-	file, err := os.Open(fullFilePath)
-	if err != nil {
-		return nil, err
-	}
-	return file, nil
-}
-
-func closeFile(file *os.File) {
-	_ = file.Close()
-}
-
-func findProjectRoot() (string, error) {
-	markerFileName := "go.mod"
-	currentDir, err := os.Getwd()
-	if err != nil {
-		return "", err
+func findNumberOfLinesWordsBytes(reader io.Reader) []int {
+	scanner := bufio.NewScanner(reader)
+	var lines, words, bytes int
+	for scanner.Scan() {
+		line := scanner.Text()
+		lines++
+		words += len(strings.Fields(line))
+		bytes += len(line) + NewLineLength
 	}
 
-	for {
-		if _, err := os.Stat(filepath.Join(currentDir, markerFileName)); err == nil {
-			return currentDir, nil
-		}
-
-		parentDir := filepath.Dir(currentDir)
-		if parentDir == currentDir {
-			return "", fmt.Errorf("marker file '%s' not found in the directory tree", markerFileName)
-		}
-
-		currentDir = parentDir
-	}
+	return []int{lines, words, bytes}
 }

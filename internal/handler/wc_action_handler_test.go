@@ -1,12 +1,17 @@
 package handler
 
-import "testing"
+import (
+	"github.com/ercanyu/build-your-own-wc-tool/internal"
+	"os"
+	"testing"
+)
 
 func TestHandleWcActionWithOptionC(t *testing.T) {
 	// given
+	reader := prepareReader(t)
 	wcAction := WcAction{
 		OptionFlag: "c",
-		FileName:   "wc_tool_test.txt",
+		Reader:     reader,
 	}
 
 	// when
@@ -19,11 +24,21 @@ func TestHandleWcActionWithOptionC(t *testing.T) {
 	}
 }
 
+func prepareReader(t *testing.T) *os.File {
+	filename := "wc_tool_test.txt"
+	reader, err := internal.OpenFile(filename)
+	if err != nil {
+		t.Errorf("could not open file %s", filename)
+	}
+	return reader
+}
+
 func TestHandleWcActionWithOptionL(t *testing.T) {
 	// given
+	reader := prepareReader(t)
 	wcAction := WcAction{
 		OptionFlag: "l",
-		FileName:   "wc_tool_test.txt",
+		Reader:     reader,
 	}
 
 	// when
@@ -38,9 +53,10 @@ func TestHandleWcActionWithOptionL(t *testing.T) {
 
 func TestHandleWcActionWithOptionW(t *testing.T) {
 	// given
+	reader := prepareReader(t)
 	wcAction := WcAction{
 		OptionFlag: "w",
-		FileName:   "wc_tool_test.txt",
+		Reader:     reader,
 	}
 
 	// when
@@ -55,9 +71,10 @@ func TestHandleWcActionWithOptionW(t *testing.T) {
 
 func TestHandleWcActionWithOptionM(t *testing.T) {
 	// given
+	reader := prepareReader(t)
 	wcAction := WcAction{
 		OptionFlag: "m",
-		FileName:   "wc_tool_test.txt",
+		Reader:     reader,
 	}
 
 	// when
@@ -72,8 +89,9 @@ func TestHandleWcActionWithOptionM(t *testing.T) {
 
 func TestHandleWcActionWithoutOption(t *testing.T) {
 	// given
+	reader := prepareReader(t)
 	wcAction := WcAction{
-		FileName: "wc_tool_test.txt",
+		Reader: reader,
 	}
 
 	// when
