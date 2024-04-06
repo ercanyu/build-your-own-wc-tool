@@ -2,7 +2,6 @@ package command
 
 import (
 	"fmt"
-	"github.com/ercanyu/build-your-own-wc-tool/internal"
 	"github.com/ercanyu/build-your-own-wc-tool/internal/calculation"
 	ufcli "github.com/urfave/cli/v2"
 	"io"
@@ -35,7 +34,7 @@ func RunWcCommand(ctx *ufcli.Context) error {
 func createReader(fileName string) (io.Reader, error) {
 	var reader io.Reader
 	if fileName != "" {
-		file, err := internal.OpenFile(fileName)
+		file, err := os.Open(fileName)
 		if err != nil {
 			fmt.Printf("Failed to open file %s\n", fileName)
 			return nil, err

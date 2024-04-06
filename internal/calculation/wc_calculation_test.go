@@ -1,14 +1,14 @@
 package calculation
 
 import (
-	"github.com/ercanyu/build-your-own-wc-tool/internal"
+	"os"
 	"testing"
 )
 
 func TestWcCalculation(t *testing.T) {
 	// given
-	filename := "wc_tool_test.txt"
-	reader, err := internal.OpenFile(filename)
+	filename := "../../data/wc_tool_test.txt"
+	reader, err := os.Open(filename)
 	if err != nil {
 		t.Errorf("could not open file %s", filename)
 	}

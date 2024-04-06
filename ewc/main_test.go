@@ -14,16 +14,17 @@ const wordCountInTestFile = 58164
 const lineCountInTestFile = 7145
 const characterCountInTestFile = 339292
 
+const TestFileName = "../data/wc_tool_test.txt"
+
 func TestEwcWithOptionCFromFile(t *testing.T) {
 	// given
-	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", "-c", testFilename}
+	os.Args = []string{"ewc", "-c", TestFileName}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
 
 	// then
-	expectedOutput := fmt.Sprintf("%d %s", byteCountInTestFile, testFilename)
+	expectedOutput := fmt.Sprintf("%d %s", byteCountInTestFile, TestFileName)
 	if !strings.Contains(actualOutput, expectedOutput) {
 		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
 	}
@@ -31,14 +32,13 @@ func TestEwcWithOptionCFromFile(t *testing.T) {
 
 func TestEwcWithOptionLFromFile(t *testing.T) {
 	// given
-	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", "-l", testFilename}
+	os.Args = []string{"ewc", "-l", TestFileName}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
 
 	// then
-	expectedOutput := fmt.Sprintf("%d %s", lineCountInTestFile, testFilename)
+	expectedOutput := fmt.Sprintf("%d %s", lineCountInTestFile, TestFileName)
 	if !strings.Contains(actualOutput, expectedOutput) {
 		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
 	}
@@ -46,14 +46,13 @@ func TestEwcWithOptionLFromFile(t *testing.T) {
 
 func TestEwcWithOptionWFromFile(t *testing.T) {
 	// given
-	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", "-w", testFilename}
+	os.Args = []string{"ewc", "-w", TestFileName}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
 
 	// then
-	expectedOutput := fmt.Sprintf("%d %s", wordCountInTestFile, testFilename)
+	expectedOutput := fmt.Sprintf("%d %s", wordCountInTestFile, TestFileName)
 	if !strings.Contains(actualOutput, expectedOutput) {
 		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
 	}
@@ -61,14 +60,13 @@ func TestEwcWithOptionWFromFile(t *testing.T) {
 
 func TestEwcWithOptionMFromFile(t *testing.T) {
 	// given
-	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", "-m", testFilename}
+	os.Args = []string{"ewc", "-m", TestFileName}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
 
 	// then
-	expectedOutput := fmt.Sprintf("%d %s", characterCountInTestFile, testFilename)
+	expectedOutput := fmt.Sprintf("%d %s", characterCountInTestFile, TestFileName)
 	if !strings.Contains(actualOutput, expectedOutput) {
 		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
 	}
@@ -76,14 +74,13 @@ func TestEwcWithOptionMFromFile(t *testing.T) {
 
 func TestEwcWithNoOptionFromFile(t *testing.T) {
 	// given
-	testFilename := "wc_tool_test.txt"
-	os.Args = []string{"ewc", testFilename}
+	os.Args = []string{"ewc", TestFileName}
 
 	// when
 	actualOutput := runMainAndCaptureOutput()
 
 	// then
-	expectedOutput := fmt.Sprintf("%d %d %d %s", lineCountInTestFile, wordCountInTestFile, byteCountInTestFile, testFilename)
+	expectedOutput := fmt.Sprintf("%d %d %d %s", lineCountInTestFile, wordCountInTestFile, byteCountInTestFile, TestFileName)
 	if !strings.Contains(actualOutput, expectedOutput) {
 		t.Errorf("Unexpected output. Got: %s, Expected: %s", actualOutput, expectedOutput)
 	}
