@@ -53,21 +53,18 @@ func getResultMessage(
 ) string {
 	if context.Bool(OptionFlagForBytes) {
 		return fmt.Sprintf("%d", wcCalculationResult.ByteCount)
-	}
-	if context.Bool(OptionFlagForLines) {
+	} else if context.Bool(OptionFlagForLines) {
 		return fmt.Sprintf("%d", wcCalculationResult.LineCount)
-	}
-	if context.Bool(OptionFlagForWords) {
+	} else if context.Bool(OptionFlagForWords) {
 		return fmt.Sprintf("%d", wcCalculationResult.WordCount)
-	}
-	if context.Bool(OptionFlagForCharacters) {
+	} else if context.Bool(OptionFlagForCharacters) {
 		return fmt.Sprintf("%d", wcCalculationResult.CharacterCount)
+	} else {
+		return fmt.Sprintf(
+			"%d %d %d",
+			wcCalculationResult.LineCount,
+			wcCalculationResult.WordCount,
+			wcCalculationResult.ByteCount,
+		)
 	}
-
-	return fmt.Sprintf(
-		"%d %d %d",
-		wcCalculationResult.LineCount,
-		wcCalculationResult.WordCount,
-		wcCalculationResult.ByteCount,
-	)
 }

@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"io"
 	"strings"
-	"unicode/utf8"
 )
 
 type WcCalculationResult struct {
@@ -25,7 +24,7 @@ func WcCalculation(reader io.Reader) WcCalculationResult {
 		lineCount++
 		wordCount += len(strings.Fields(line))
 		byteCount += len(line) + NewLineByteCount
-		characterCount += utf8.RuneCountInString(line) + NewLineCharacterCount
+		characterCount += len([]rune(line)) + NewLineCharacterCount
 	}
 
 	return WcCalculationResult{
